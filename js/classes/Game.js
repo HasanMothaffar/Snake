@@ -6,7 +6,10 @@ export default class Game {
 	_canvas; //the canvas element which will display the game
 	_element; // the main element of the game -- in this case, it's the snake
 	_food; //the piece of food that the snake will eat
-	
+	_gameInterval; //the main loop for the game. i may pause it and then resume it
+	_gameSpeed; // every gameSpeed milliseconds, the canvas redraws the snake 
+	_running; //a boolean that indicates whether the game is running or not
+
 	/**
 	 * 
 	 * @param {HTMLCanvasElement} canvas 
@@ -32,25 +35,48 @@ export default class Game {
 	 * actually starts the game loop
 	 * @param {number} gameSpeed - every gameSpeed milliseconds, the canvas redraws the snake 
 	 */
-	start(gameSpeed) {
+	start(gameSpeed = 100) {
+		if (this._running) {
+			return;
+		}
+		this._running = true;
 		// generates the right coordinates for the piece of food
 		this._food.generateCoordinates(this._element.tiles);
+		this._gameSpeed = gameSpeed;
 		
-		let gameInterval = setInterval(() => {
-			if (this._hasSnakeGameEnded()) {
-				alert('dead');
-				clearInterval(gameInterval);
-				return;
-			}
+		this._gameInterval = setInterval(this.renderGame.bind(this), this._gameSpeed);
+	}
 
-			this._canvas.clear();
-			this._element.changingDirection = false;
-			this._element.move(this._food);	
+	pause() {
+		if (!this._running) {
+			console.log('here');
+			return;
+		}
+		this._running = false;
+		clearInterval(this._gameInterval);
+	}
 
-			this._canvas.drawElement(this._element);
-			this._canvas.drawElement(this._food);
-			
-		}, gameSpeed)
+	resume() {
+		if (!this._running) {
+			this._gameInterval = setInterval(this.renderGame.bind(this), this._gameSpeed);
+			this._running = true;
+		}
+	}
+
+	// i just refactored the same code from the resume and start functions and put it in this one
+	renderGame() {
+		if (this._hasSnakeGameEnded()) {
+			alert('dead');
+			clearInterval(this._gameInterval);
+			return;
+		}
+
+		this._canvas.clear();
+		this._element.changingDirection = false;
+		this._element.move(this._food);	
+
+		this._canvas.drawElement(this._element);
+		this._canvas.drawElement(this._food);
 	}
 
 	/**
@@ -77,5 +103,5 @@ export default class Game {
 }
 
 /**
- * TODO: remember to provide a comment for the line labelled with a bookmark
+ * TODO: remember to provide a comment for the line labelled with a bookmark. sth with change_direction = false;
  */
