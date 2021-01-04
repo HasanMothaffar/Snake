@@ -27,7 +27,7 @@ canvas {
 	flex-flow: column nowrap;
 }
 
-.start-button-wrapper {
+.buttons-wrapper {
 	background: linear-gradient(to right, red, purple);
 	padding: .2rem;
 	position: relative;
