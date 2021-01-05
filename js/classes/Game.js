@@ -55,8 +55,6 @@ export default class Game {
 		this._gameSpeed = gameSpeed;
 		
 		this.resume();
-		this._alreadyStarted = true;
-
 	}
 
 	pause() {

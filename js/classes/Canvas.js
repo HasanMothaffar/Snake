@@ -60,7 +60,7 @@ export default class Canvas {
 	 */
 	clear() {
 		this._ctx.fillStyle = this._boardBackground;
-		this._ctx.clearRect(0, 0, this._width, this._height);
+		this._ctx.fillRect(0, 0, this._width, this._height);
 	}
 
 	/**
