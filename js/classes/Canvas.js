@@ -23,6 +23,9 @@ export default class Canvas {
 
 		this._width = width;
 		this._height = height;
+
+		this._adjustDimensions();
+
 		this._boardBackground = boardBackground;
 	}
 
@@ -35,6 +38,21 @@ export default class Canvas {
 	 * @returns {number}
 	 */
 	get height() { return this._height; }
+
+	/**
+	 * sets the correct width and height values for the canvas
+	 */
+	_adjustDimensions() {
+		this._board.setAttribute('width', this._width);
+		this._board.setAttribute('height', this._height);
+
+		// these are html attributes. required for proper rendering of the canvas element
+
+		this._board.style.width = this._width + 'px';
+		this._board.style.height = this.height + 'px';
+
+		// these are css properties for the real width and height properties
+	}
 
 	/**
 	 * clears the canvas

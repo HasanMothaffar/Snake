@@ -9,9 +9,10 @@ export default class Game {
 	_gameInterval; //the main loop for the game. i may pause it and then resume it
 	_gameSpeed; // every gameSpeed milliseconds, the canvas redraws the snake 
 	_running; //a boolean that indicates whether the game is running or not
+	_alreadyStarted; //a boolean that indicates that the user already started the game. this is used so that the start function can yield control to the resume function
+	// this variable is useful in the case where the user wants to start the game again but it's already running.
 
 	/**
-	 * 
 	 * @param {HTMLCanvasElement} canvas 
 	 * @param {Object} element - snake
 	 */
@@ -19,6 +20,7 @@ export default class Game {
 		this._canvas = canvas;
 		this._element = element;
 		this._food = new Food(this._element.tileSize, this._canvas.width, this._canvas.height, 'lightgreen', 'darkgreen');
+		this.initialRender();
 	}
 
 	/**
@@ -39,12 +41,22 @@ export default class Game {
 		if (this._running) {
 			return;
 		}
-		this._running = true;
+
+		/*
+		this line is actually different from the condition above. once the user pauses the game, this._running is set to false. and if the user presses space, the game will restart and cause a new piece of food to be generated.
+		i don't want this behaviour so i created the condition below.
+		*/
+		if (this._alreadyStarted) {
+			return this.resume();
+		}
+
 		// generates the right coordinates for the piece of food
 		this._food.generateCoordinates(this._element.tiles);
 		this._gameSpeed = gameSpeed;
 		
-		this._gameInterval = setInterval(this.renderGame.bind(this), this._gameSpeed);
+		this.resume();
+		this._alreadyStarted = true;
+
 	}
 
 	pause() {
