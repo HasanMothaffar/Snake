@@ -1,3 +1,5 @@
+import * as Keys from "../key_constants.js";
+
 export default class EventHandler {
 	_providerElement;
 
@@ -10,16 +12,21 @@ export default class EventHandler {
 	}
 
 	handleEvent(event) {
-		let id = event.target.id;
-		this._providerElement[id]();
+		const keyPressed = event.keyCode;
+		let method = '';
 
-		/*
-			Example use case:
-			the pause button is pressed, which causes an event with event.target.id == 'pause' to be emitted
-			now this objects listens to this event and calls the appropriate snakeBoard method.
-			note that snakeBoard == this._providerElement
+		if (keyPressed == Keys.SPACE) {
+			method = 'start';
+		}
 
-		*/
+		else if (keyPressed == Keys.ESCAPE) {
+			method = 'pause';
+		}
+
+		if (method) {
+			this._providerElement[method]();
+		}
+
 	}
 }
 

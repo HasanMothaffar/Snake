@@ -3,16 +3,15 @@ import Snake from "./classes/Snake.js";
 import Game from "./classes/Game.js";
 import EventHandler from "./classes/EventHandler.js";
 
-const snake = new Snake(100, 100, 4, 20);
+const snake = new Snake(100, 100, 4, 20, 'darkgreen', 'yellow');
 const snakeBoard = new Canvas({
 	id: 'snakeBoard',
 	element: snake,
+	width: 600,
+	height: 600
 });
 
 const snakeGame = new Game(snakeBoard, snake);
-const buttonsWrapper = document.querySelector('.buttons-wrapper');
 const eventHandler = new EventHandler(snakeGame);
 
-
-snakeGame.initialRender();
-buttonsWrapper.addEventListener('click', eventHandler)
+document.addEventListener('keydown', eventHandler);

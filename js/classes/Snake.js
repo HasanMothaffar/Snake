@@ -8,9 +8,15 @@ export default class Snake {
 	_horizontalSpeed = -20;
 	_changingDirection = false;
 	_parentContext;	
+
+	// colors for tiles
+	_normalTileColor;
+	_headTileColor;
 	// assuming everything is horizontal now and from right to left
-	constructor(initialX, initialY, numOfStartingBlocks, tileSize) {
+	constructor(initialX, initialY, numOfStartingBlocks, tileSize, normalTileColor, headTileColor) {
 		this._tileSize = tileSize;
+		this._normalTileColor = normalTileColor;
+		this._headTileColor = headTileColor;
 
 		for (let i = 0; i < numOfStartingBlocks; i++) {
 			this._tiles.push({
@@ -47,16 +53,19 @@ export default class Snake {
 
 	/*-- DRAWING LOGIC --*/
 
-	drawSnakePart({x, y}) {
-		this._parentContext.fillStyle = 'green';
+	drawSnakePart({x, y}, index) {
+		this._parentContext.fillStyle = index == 0 ? this._headTileColor : this._normalTileColor;
 		this._parentContext.strokeStyle = 'darkblue';
+
 		this._parentContext.fillRect(x, y, this.tileSize, this.tileSize);
 		this._parentContext.strokeRect(x, y, this.tileSize, this.tileSize);
 	}
 
 	drawOnCanvas(context) {
 		this._parentContext = context;
-		this._tiles.forEach(this.drawSnakePart.bind(this))
+		this._tiles.forEach((tile, index) => {
+			this.drawSnakePart(tile, index);
+		})
 	}
 
 	move(food) {
