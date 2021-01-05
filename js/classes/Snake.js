@@ -90,7 +90,7 @@ export default class Snake {
 	changeDirection(event) {
 		let direction = '';
 		const keyPressed = event.keyCode;
-		if (this._changingDirection) return;
+		if (this._changingDirection) return; //used to prevent the snake from going into the reverse direction. for example, going up and then down
 		this._changingDirection = true;
 		
 		const goingUp = this.verticalSpeed == -20;

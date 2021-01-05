@@ -4,6 +4,7 @@ export default class Canvas {
 	_board; //canvas element
 	_ctx; //2d context
 	_boardBackground;
+	_boardBorder;
 	_width;
 	_height;
 	_element; // element to render
@@ -19,14 +20,14 @@ export default class Canvas {
 	}) {
 		this._board = document.getElementById(id);
 		this._ctx = this._board.getContext('2d');
-		this._element = element;
 
+		this._element = element;
+		this._boardBorder = boardBorder;
+		this._boardBackground = boardBackground;
 		this._width = width;
 		this._height = height;
 
 		this._adjustDimensions();
-
-		this._boardBackground = boardBackground;
 	}
 
 	/**

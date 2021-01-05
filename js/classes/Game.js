@@ -38,6 +38,10 @@ export default class Game {
 	 * @param {number} gameSpeed - every gameSpeed milliseconds, the canvas redraws the snake 
 	 */
 	start(gameSpeed = 100) {
+		if (!this._alreadyStarted) {
+			console.log("Starting the game. Have fun!");
+		}		
+
 		if (this._running) {
 			return;
 		}
@@ -58,8 +62,8 @@ export default class Game {
 	}
 
 	pause() {
+		console.log("Game paused.");
 		if (!this._running) {
-			console.log('here');
 			return;
 		}
 		this._running = false;
@@ -67,6 +71,7 @@ export default class Game {
 	}
 
 	resume() {
+		console.log("Resuming the game.");
 		if (!this._running) {
 			this._gameInterval = setInterval(this.renderGame.bind(this), this._gameSpeed);
 			this._running = true;
@@ -97,14 +102,14 @@ export default class Game {
 		// the snake can only eat one of its own tiles if its length is > 4
 		const head = this._element.snakeHead;
 		for (let i = 4; i < this._element.tiles.length; i++) {
-			// checking if the snake's head matches any of its other tiles
+			// checking if the snake's head collides with any of its other tiles
 			if (this._element.tiles[i].x == head.x && this._element.tiles[i].y == head.y) {
 				return true;
 			}
 		}
 
 		const hitLeftWall = head.x < 0;
-		const hitRightWall = head.x > this._canvas.width - this._element.tileSize;
+		const hitRightWall = head.x > this._canvas.width - this._element.tileSize; //the tile with the coordinate 'this._canvas.width - this._element.tileSize' is the last tile in the canvas. therefore, here we're checking if the head of the snake is past this tile
 		const hitToptWall = head.y < 0;
 		const hitBottomWall = head.y > this._canvas.height - this._element.tileSize;
 
