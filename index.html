@@ -7,12 +7,29 @@
 		<link rel="stylesheet" href="./css/main.css">
 	</head>
 	<body>
+
+		<!-- body is a flex container that hold both the canvas and the options wrapper -->
+
 		<div class="game-wrapper">
 			<canvas id = "snakeBoard" width="300" height="300"></canvas>
-			<div class="buttons-wrapper">
-				<button id = "start" class = "button start-button">Start Game</button>
-				<button id = "pause" class = "button">Pause</button>
-				<button id = "resume" class = "button">Resume</button>
+		</div>
+
+		<div class="options-wrapper">
+			<!-- each option belongs to an input-group container -->
+			
+			<div class="input-group">
+				<input id = 'dark_mode' name = 'dark_mode' type="checkbox" class="toggle" checked>
+				<label for="dark_mode">Dark Mode</label>
+			</div>
+
+			<div class="input-group">
+				<input id = 'dark_mode' name = 'dark_mode' type="checkbox" class="toggle" checked>
+				<label for="dark_mode">Dark Mode</label>
+			</div>
+
+			<div class="input-group">
+				<input id = 'dark_mode' name = 'dark_mode' type="checkbox" class="toggle" checked>
+				<label for="dark_mode">Dark Mode</label>
 			</div>
 		</div>
 		<script src="./js/index.js" type="module"></script>				
