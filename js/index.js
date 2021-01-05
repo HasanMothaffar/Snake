@@ -8,10 +8,12 @@ const snakeBoard = new Canvas({
 	id: 'snakeBoard',
 	element: snake,
 	width: 600,
-	height: 600
+	height: 600,
+	boardBackground: '#846A6A'
 });
 
 const snakeGame = new Game(snakeBoard, snake);
 const eventHandler = new EventHandler(snakeGame);
 
 document.addEventListener('keydown', eventHandler);
+// this adds support for keyboard arrows.

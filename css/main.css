@@ -1,16 +1,19 @@
 html {
 	height: 100%;
 	font-size: 16px;
+	font-family: 'Gill Sans MT';
 }
 
 body {
 	height: 100%;
 	display: flex;
+	flex-flow: row wrap;
 	margin: 0;
 	align-items: center;
-	justify-content: center;
-	background-color: #f1dfd1;
-	background-image: linear-gradient(315deg, #f1dfd1 0%, #f6f0ea 74%);
+	justify-content: space-around;
+	/* background-color: #f1dfd1;
+	background-image: linear-gradient(315deg, #f1dfd1 0%, #f6f0ea 74%); */
+	background: #353B3C;
 }
 
 canvas {
@@ -22,25 +25,74 @@ canvas {
 	margin-bottom: 30px;
 }
 
-.wrapper {
+/* canvas actually requires both css styles and in-line html styles. read more about this on the Internet */
+
+/* the layout of the page is basically two divs that are contained in a flex container
+	they are .game-wrapper and .options-wrapper
+*/
+
+.game-wrapper {
 	display: flex;
 	flex-flow: column nowrap;
+	align-items: center;
 }
 
-.buttons-wrapper {
-	background: linear-gradient(to right, red, purple);
-	padding: .2rem;
-	position: relative;
-	border-radius: 20px;
-	text-align: center
+.options-wrapper {
+	border: 1px solid black;
+	background: #C9B7AD;
+	height: 70%;
 }
 
-.start-button {
-	padding: 20px;
-	background: #ca6d6d;
-	border: 1px solid silver;
-	border-radius: 20px;
-	width: 100%;
-	font-family: Geneva, Verdana, sans-serif;
+
+input[type="checkbox"] {
+	appearance: none;
+	cursor: pointer
+}
+
+.input-group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 350px;
+	margin-bottom: 20px;
+}
+
+.input-group label {
 	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+/* STYLING FOR THE DARK MODE SWITCH BUTTON */
+
+.toggle {
+	height: 32px;
+	width: 65px;
+	border-radius: 15px;
+	background: linear-gradient(180deg, #2D2F39 0%, #1F2027 100%);
+	transition: all .2s ease;
+	position: relative;	
+	border: 2px solid #474755
+}
+
+.toggle::after {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: white;
+	box-shadow: 0 1px 2px rgba(44,44,44,.2);
+	transition: all .2s cubic-bezier(.5,.1,.75,1.35);
+}
+
+.toggle:checked {
+	border-color: #654FEC;
+	background: white;
+}
+
+.toggle:checked::after {
+	transform: translateX(35px);
+	background: linear-gradient(180deg, #2D2F39 0%, #1F2027 100%);
 }
