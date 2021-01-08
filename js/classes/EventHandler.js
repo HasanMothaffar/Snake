@@ -1,11 +1,13 @@
 import * as Keys from "../key_constants.js";
+import Game from "./Game.js";
 
 export default class EventHandler {
 	_providerElement;
+	_alreadyStarted; //a boolean to indicate whether the user started the game before.
 
 	/**
 	 * initializes the element that we want to take the methods from
-	 * @param {Object} providerElement 
+	 * @param {Game} providerElement 
 	 */
 	constructor(providerElement) {
 		this._providerElement = providerElement;
@@ -16,10 +18,19 @@ export default class EventHandler {
 		let method = '';
 
 		if (keyPressed == Keys.SPACE) {
-			method = 'start';
+			if (this._alreadyStarted == true) {
+				console.log('Resuming.');
+				method = 'resume';
+			}
+			else {
+				console.log('Starting the game. Have fun!');
+				method = 'start';
+				this._alreadyStarted = true;
+			}
 		}
 
 		else if (keyPressed == Keys.ESCAPE) {
+			console.log('Pausing the game.');
 			method = 'pause';
 		}
 

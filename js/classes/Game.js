@@ -1,5 +1,6 @@
 import Food from "./Food.js";
 import Canvas from "./Canvas.js";
+import Snake from "./Snake.js";
 // the food object is initialized in the constructor
 
 export default class Game {
@@ -9,13 +10,11 @@ export default class Game {
 	_food; //the piece of food that the snake will eat
 	_gameInterval; //the main loop for the game. i may pause it and then resume it
 	_gameSpeed; // every gameSpeed milliseconds, the canvas redraws the snake 
-	_running; //a boolean that indicates whether the game is running or not
-	_alreadyStarted; //a boolean that indicates that the user already started the game. this is used so that the start function can yield control to the resume function
-	// this variable is useful in the case where the user wants to start the game again but it's already running.
+	_running; //a boolean that indicates whether the game is running or not	
 
 	/**
 	 * @param {Canvas} canvas 
-	 * @param {Object} element - snake
+	 * @param {Snake} element - snake
 	 */
 	constructor(canvas, element) {
 		this._canvas = canvas;
@@ -60,32 +59,18 @@ export default class Game {
 	 * actually starts the game loop
 	 * @param {number} gameSpeed - every gameSpeed milliseconds, the canvas redraws the snake 
 	 */
-	start(gameSpeed = 100) {
-		if (!this._alreadyStarted) {
-			console.log("Starting the game. Have fun!");
-		}		
-
+	start(gameSpeed = 100) {		
 		if (this._running) {
 			return;
-		}
-
-		/*
-		this line is actually different from the condition above. once the user pauses the game, this._running is set to false. and if the user presses space, the game will restart and cause a new piece of food to be generated.
-		i don't want this behaviour so i created the condition below.
-		*/
-		if (this._alreadyStarted) {
-			return this.resume();
 		}
 
 		// generates the right coordinates for the piece of food
 		this._food.generateCoordinates(this._element.tiles);
 		this._gameSpeed = gameSpeed;
-		
 		this.resume();
 	}
 
 	pause() {
-		console.log("Game paused.");
 		if (!this._running) {
 			return;
 		}
@@ -94,7 +79,6 @@ export default class Game {
 	}
 
 	resume() {
-		console.log("Resuming the game.");
 		if (!this._running) {
 			this._gameInterval = setInterval(this.renderGame.bind(this), this._gameSpeed);
 			this._running = true;
