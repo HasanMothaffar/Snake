@@ -40,14 +40,14 @@ export default class Food {
 	 */
 	drawOnCanvas(context) {
 		context.fillStyle = this._foodColor;
-		context.strokestyle = this._foodBorderColor;
-		
+		context.strokeStyle = this._foodBorderColor;
+
 		context.fillRect(this._x, this._y, this._foodSize, this._foodSize);
 		context.strokeRect(this._x, this._y, this._foodSize, this._foodSize);
 	}
 
 	/**
-	 * generate coordiantes for the piece of food. 
+	 * generate coordinates for the piece of food.
 	 * @param {Array} tiles - array of tiles that the snake occupies 
 	 * @returns {void}
 	 */
@@ -71,7 +71,7 @@ export default class Food {
 	 * generate a random coordinate for the piece of food
 	 * @param {number} min - usually 0, which is the starting point of the canvas
 	 * @param {number} max - the furthest place on the canvas upon which the piece of food can be generated
-	 * @returns {number} A random number representing a coorinate. note that this isn't an (x, y) pair. it's just a single number
+	 * @returns {number} A random number representing a coordinate. note that this isn't an (x, y) pair. it's just a single number
 	 */
 	_randomCoordinate(min, max) {
 		return Math.round((Math.random() * (max-min) + min) / this._foodSize) * this._foodSize;
