@@ -9,11 +9,17 @@ const snakeBoard = new Canvas({
 	element: snake,
 	width: 600,
 	height: 600,
-	boardBackground: '#846A6A'
 });
 
 const snakeGame = new Game(snakeBoard, snake);
 const eventHandler = new EventHandler(snakeGame);
 
 document.addEventListener('keydown', eventHandler);
+dark_mode.addEventListener('click', (event) => {
+	document.documentElement.classList.toggle('dark');
+	snakeBoard.switchColorTheme();
+	snakeGame.updateCanvas();
+	event.target.blur();
+});
+
 // this adds support for keyboard arrows.

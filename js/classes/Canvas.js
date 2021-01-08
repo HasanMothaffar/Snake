@@ -8,13 +8,13 @@ export default class Canvas {
 	_width;
 	_height;
 	_element; // element to render
+	_colorTheme; //string to indicate whether the canvas is in dark or light mode
 	
 	constructor({
 		id = 'canvas',
-		snake = [],
 		width = 300,
 		height = 300,
-		boardBackground = 'white',
+		boardBackground = '#846A6A',
 		boardBorder = 'silver',
 		element = {}
 	}) {
@@ -24,6 +24,7 @@ export default class Canvas {
 		this._element = element;
 		this._boardBorder = boardBorder;
 		this._boardBackground = boardBackground;
+		this._colorTheme = 'white';
 		this._width = width;
 		this._height = height;
 
@@ -61,7 +62,9 @@ export default class Canvas {
 	 */
 	clear() {
 		this._ctx.fillStyle = this._boardBackground;
+		this._ctx.strokeStyle = this._boardBorder;
 		this._ctx.fillRect(0, 0, this._width, this._height);
+		this._ctx.strokeRect(0, 0, this._width, this._height);
 	}
 
 	/**
@@ -70,5 +73,29 @@ export default class Canvas {
 	 */
 	drawElement(element) {
 		element.drawOnCanvas(this._ctx);
+	}
+
+	/* -- COLOR THEME LOGIC -- */
+
+	setWhiteMode() {
+		this._boardBackground = '#846A6A';
+		this._boardBorder = 'silver';
+		this._colorTheme = 'white';
+	}
+
+	setDarkMode() {
+		this._boardBackground = 'black';
+		this._boardBorder = 'yellow';
+		this._colorTheme = 'dark';
+	}
+
+	switchColorTheme() {
+		if (this._colorTheme == 'white') {
+			this.setDarkMode();
+		}
+
+		else {
+			this.setWhiteMode();
+		}
 	}
 }

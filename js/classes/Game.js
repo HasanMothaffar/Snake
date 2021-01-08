@@ -1,4 +1,5 @@
 import Food from "./Food.js";
+import Canvas from "./Canvas.js";
 // the food object is initialized in the constructor
 
 export default class Game {
@@ -13,7 +14,7 @@ export default class Game {
 	// this variable is useful in the case where the user wants to start the game again but it's already running.
 
 	/**
-	 * @param {HTMLCanvasElement} canvas 
+	 * @param {Canvas} canvas 
 	 * @param {Object} element - snake
 	 */
 	constructor(canvas, element) {
@@ -21,6 +22,28 @@ export default class Game {
 		this._element = element;
 		this._food = new Food(this._element.tileSize, this._canvas.width, this._canvas.height, 'lightgreen', 'darkgreen');
 		this.initialRender();
+	}
+
+	/**
+	 * checks if the game should continue or not
+	 * @returns {boolean} whether the snake hit any of the boundaries or ate itself
+	 */
+	_hasSnakeGameEnded() {
+		// the snake can only eat one of its own tiles if its length is > 4
+		const head = this._element.snakeHead;
+		for (let i = 4; i < this._element.tiles.length; i++) {
+			// checking if the snake's head collides with any of its other tiles
+			if (this._element.tiles[i].x == head.x && this._element.tiles[i].y == head.y) {
+				return true;
+			}
+		}
+
+		const hitLeftWall = head.x < 0;
+		const hitRightWall = head.x > this._canvas.width - this._element.tileSize; //the tile with the coordinate 'this._canvas.width - this._element.tileSize' is the last tile in the canvas. therefore, here we're checking if the head of the snake is past this tile
+		const hitToptWall = head.y < 0;
+		const hitBottomWall = head.y > this._canvas.height - this._element.tileSize;
+
+		return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
 	}
 
 	/**
@@ -94,26 +117,10 @@ export default class Game {
 		this._canvas.drawElement(this._food);
 	}
 
-	/**
-	 * checks if the game should continue or not
-	 * @returns {boolean} whether the snake hit any of the boundaries or ate itself
-	 */
-	_hasSnakeGameEnded() {
-		// the snake can only eat one of its own tiles if its length is > 4
-		const head = this._element.snakeHead;
-		for (let i = 4; i < this._element.tiles.length; i++) {
-			// checking if the snake's head collides with any of its other tiles
-			if (this._element.tiles[i].x == head.x && this._element.tiles[i].y == head.y) {
-				return true;
-			}
-		}
-
-		const hitLeftWall = head.x < 0;
-		const hitRightWall = head.x > this._canvas.width - this._element.tileSize; //the tile with the coordinate 'this._canvas.width - this._element.tileSize' is the last tile in the canvas. therefore, here we're checking if the head of the snake is past this tile
-		const hitToptWall = head.y < 0;
-		const hitBottomWall = head.y > this._canvas.height - this._element.tileSize;
-
-		return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
+	updateCanvas() {
+		this._canvas.clear();
+		this._canvas.drawElement(this._element);
+		this._canvas.drawElement(this._food);
 	}
 }
 
