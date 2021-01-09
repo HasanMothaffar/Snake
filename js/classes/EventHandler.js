@@ -17,7 +17,7 @@ export default class EventHandler {
 		const keyPressed = event.keyCode;
 		let method = '';
 
-		if (keyPressed == Keys.SPACE) {
+		if (keyPressed == Keys.SPACE && this._alreadyStarted) {
 			if (this._alreadyStarted == true) {
 				console.log('Resuming.');
 				method = 'resume';
@@ -32,6 +32,10 @@ export default class EventHandler {
 		else if (keyPressed == Keys.ESCAPE) {
 			console.log('Pausing the game.');
 			method = 'pause';
+		}
+
+		else if (keyPressed == Keys.R && this._providerElement.isSnakeDead()) {
+			method = 'restart';
 		}
 
 		if (method) {
