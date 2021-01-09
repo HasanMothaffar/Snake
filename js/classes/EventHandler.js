@@ -17,7 +17,7 @@ export default class EventHandler {
 		const keyPressed = event.keyCode;
 		let method = '';
 
-		if (keyPressed == Keys.SPACE && this._alreadyStarted) {
+		if (keyPressed == Keys.SPACE) {
 			if (this._alreadyStarted == true) {
 				console.log('Resuming.');
 				method = 'resume';
